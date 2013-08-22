@@ -1,0 +1,41 @@
+= domaintoolsAPI Ruby Wrapper
+
+== Presentation
+
+The domaintoolsAPI Ruby Wrapper is a simple connector to access all webservices of domaintools.com.
+
+== Getting started
+
+===1- Install DomainTools gem
+
+    gem install domain_tools
+                           
+===2- Create a short ruby file and paste this code to do a simple whois on domaintools.com:
+                            
+    require('domain_tools')
+    DOMAINTOOLS_USERNAME  = "your_username"
+    DOMAINTOOLS_KEY       = "your_key"
+    DomainTools::use(DOMAINTOOLS_USERNAME,DOMAINTOOLS_KEY)::as("json")
+    begin
+      request         = DomainTools.request
+      request.service = "whois"
+      request.domain  = "domaintools.com"
+      response        = request.do
+      puts response.to_s
+    rescue DomainTools::ServiceException => e
+      @error = "#{e.class}: #{request.error}" if request.error?
+    end
+
+===3- Browse the response as a hash
+
+    if response.to_hash["response"].has_key?("registrant")
+      puts response.to_hash["response"]["registrant"]["name"]
+    end
+
+===4- Documentation
+  
+See the *documentation.md* file 
+
+===5- Examples
+
+See *examples* folder
